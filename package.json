@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
     "dev": "nodemon src/index.ts",
     "migrate-up": "npx node-pg-migrate up --dir migrations --database-url $DATABASE_URL",
     "migrate-down": "npx node-pg-migrate down --dir migrations --database-url $DATABASE_URL"

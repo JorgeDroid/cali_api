@@ -1,4 +1,4 @@
-import pg from "pg";
+// import pg from "pg";
 
 export interface User {
   id: number;
