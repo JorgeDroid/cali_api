@@ -1,0 +1,40 @@
+{
+  "name": "cali_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon src/index.ts",
+    "migrate-up": "npx node-pg-migrate up --dir migrations --database-url $DATABASE_URL",
+    "migrate-down": "npx node-pg-migrate down --dir migrations --database-url $DATABASE_URL"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JorgeDroid/cali_api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JorgeDroid/cali_api/issues"
+  },
+  "homepage": "https://github.com/JorgeDroid/cali_api#readme",
+  "devDependencies": {
+    "@fastify/postgres": "^6.0.2",
+    "@types/node": "^22.12.0",
+    "@types/pg": "^8.11.11",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.1",
+    "node-pg-migrate": "^7.9.0",
+    "pg": "^8.13.1",
+    "pg-migrate": "^2.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
