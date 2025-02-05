@@ -1,4 +1,6 @@
 import fastify from "fastify";
+import cors from "@fastify/cors";
+
 import pg from "pg";
 import dotenv from "dotenv";
 
@@ -25,6 +27,10 @@ export async function connectPostgres() {
 async function bootstrap() {
   const app = fastify({
     logger: true,
+  });
+
+  app.register(cors, {
+    origin: "*",
   });
 
   // Initialize database connection
