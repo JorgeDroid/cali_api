@@ -36,7 +36,7 @@ async function bootstrap() {
   });
 
   // Register routes
-  app.register(require("./routes/user"), { prefix: "api" });
+  app.register(require("./routes/clients"), { prefix: "api" });
 
   // Start the server
   const port = parseInt(process.env.PORT ?? "", 10) || 3000;

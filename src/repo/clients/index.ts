@@ -1,6 +1,3 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { STANDARD } from "../../constants/request";
-import { handleServerError } from "../../helpers/errors.helper";
 import { connectPostgres } from "../..";
 import { IClientCreationDto, IClientUpdateDto } from "../../schemas/Client";
 
@@ -27,9 +24,10 @@ export const Create = async (data: IClientCreationDto) => {
 };
 
 export const GetAll = async () => {
+  console.log("GetAll");
   const db = await connectPostgres();
   try {
-    const clients = await db.query("SELECT * FROM clients");
+    const clients = await db.query("SELECT * FROM users");
     db.end();
     return clients.rows;
   } catch (e: any) {

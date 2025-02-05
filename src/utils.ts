@@ -19,9 +19,9 @@ export const utils = {
 
   genSalt: (saltRounds: number, value: string): Promise<string> => {
     return new Promise((resolve, reject) => {
-      bcrypt.genSalt(saltRounds, (err, salt) => {
+      bcrypt.genSalt(saltRounds, (err: any, salt: any) => {
         if (err) return reject(err);
-        bcrypt.hash(value, salt, (err, hash) => {
+        bcrypt.hash(value, salt, (err: any, hash: any) => {
           if (err) return reject(err);
           resolve(hash);
         });
@@ -31,7 +31,7 @@ export const utils = {
 
   compareHash: (hash: string, value: string): Promise<boolean> => {
     return new Promise((resolve, reject) => {
-      bcrypt.compare(value, hash, (err, result) => {
+      bcrypt.compare(value, hash, (err: any, result: any) => {
         if (err) return reject(err);
         resolve(result);
       });
@@ -66,7 +66,7 @@ export const utils = {
   preValidation: (schema: Joi.ObjectSchema) => {
     return (
       request: FastifyRequest,
-      reply: FastifyReply,
+      _: FastifyReply,
       done: (err?: Error) => void
     ) => {
       const { error } = schema.validate(request.body);

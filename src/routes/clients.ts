@@ -3,7 +3,7 @@ import { clientCreationSchema, clientUpdateSchema } from "../schemas/Client";
 import * as controllers from "../controllers";
 
 import { utils } from "../utils";
-import { checkValidRequest, checkValidUser } from "../helpers/auth.helper";
+// import { checkValidRequest, checkValidUser } from "../helpers/auth.helper";
 
 async function clientsRouter(fastify: FastifyInstance) {
   fastify.get(
@@ -12,7 +12,7 @@ async function clientsRouter(fastify: FastifyInstance) {
       config: {
         description: "Get all clients",
       },
-      preHandler: [checkValidRequest, checkValidUser],
+      // preHandler: [checkValidRequest, checkValidUser],
     },
     controllers.GetClients
   );
@@ -23,7 +23,7 @@ async function clientsRouter(fastify: FastifyInstance) {
       config: {
         description: "Get client by id",
       },
-      preHandler: [checkValidRequest, checkValidUser],
+      // preHandler: [checkValidRequest, checkValidUser],
     },
     controllers.GetClient
   );
@@ -48,7 +48,7 @@ async function clientsRouter(fastify: FastifyInstance) {
         description: "Create Client",
       },
       preValidation: utils.preValidation(clientCreationSchema),
-      preHandler: [checkValidRequest, checkValidUser],
+      // preHandler: [checkValidRequest, checkValidUser],
     },
     controllers.CreateClient
   );
@@ -72,7 +72,7 @@ async function clientsRouter(fastify: FastifyInstance) {
         description: "Update Client",
       },
       preValidation: utils.preValidation(clientUpdateSchema),
-      preHandler: [checkValidRequest, checkValidUser],
+      // preHandler: [checkValidRequest, checkValidUser],
     },
     controllers.UpdateClient
   );
@@ -83,7 +83,7 @@ async function clientsRouter(fastify: FastifyInstance) {
       config: {
         description: "Delete Client",
       },
-      preHandler: [checkValidRequest, checkValidUser],
+      // preHandler: [checkValidRequest, checkValidUser],
     },
     controllers.DeleteClient
   );
