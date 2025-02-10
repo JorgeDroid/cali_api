@@ -9,6 +9,7 @@ export interface IClientCreationDto {
 }
 
 export interface IClientUpdateDto {
+  id: string;
   name?: string;
   last_name?: string;
   email?: string;
@@ -30,4 +31,8 @@ export const clientUpdateSchema = Joi.object({
   email: Joi.string().email(),
   phone: Joi.string(),
   password: Joi.string().min(8),
+});
+
+export const brandCreationSchema = Joi.object({
+  name: Joi.string().required(),
 });

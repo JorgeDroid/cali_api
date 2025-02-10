@@ -2,75 +2,76 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { STANDARD } from "../../constants/request";
 import { handleServerError } from "../../helpers/errors.helper";
 import { connectPostgres } from "../..";
-import { IClientCreationDto, IClientUpdateDto } from "../../schemas/Client";
-import { ClientRepo } from "../../repo/clients";
+import {} from "../../schemas/Spares";
+import { SpareRepo } from "../../repo/spares";
+import { ISpareCreationDto, ISpareUpdateDto } from "../../schemas/Spares";
 
-export const CreateClient = async (
+export const CreateSpare = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
-    const user_data = request.body as IClientCreationDto;
-    const newClient = await ClientRepo.Create(user_data);
-    reply.status(STANDARD.OK.statusCode).send({ data: newClient });
+    const spare_data = request.body as ISpareCreationDto;
+    const newSpare = await SpareRepo.Create(spare_data);
+    reply.status(STANDARD.OK.statusCode).send({ data: newSpare });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const GetClients = async (_: FastifyRequest, reply: FastifyReply) => {
+export const GetSpares = async (_: FastifyRequest, reply: FastifyReply) => {
   const db = await connectPostgres();
   try {
-    const clients = await ClientRepo.GetAll();
-    reply.status(STANDARD.OK.statusCode).send({ data: clients });
+    const spares = await SpareRepo.GetAll();
+    reply.status(STANDARD.OK.statusCode).send({ data: spares });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const GetClient = async (
-  request: FastifyRequest,
-  reply: FastifyReply
-) => {
-  const db = await connectPostgres();
-  try {
-    const { id } = request.params as { id: string };
-    const client = await ClientRepo.GetByID(id);
-    reply.status(STANDARD.OK.statusCode).send({ data: client });
-    db.end();
-  } catch (e) {
-    handleServerError(reply, e);
-  }
-};
-
-export const UpdateClient = async (
+export const GetSpare = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
     const { id } = request.params as { id: string };
-    const user_data = request.body as IClientUpdateDto;
-    const client = await ClientRepo.Update(id, user_data);
-    reply.status(STANDARD.OK.statusCode).send({ data: client });
+    const spare = await SpareRepo.GetByID(id);
+    reply.status(STANDARD.OK.statusCode).send({ data: spare });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const DeleteClient = async (
+export const UpdateSpare = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
     const { id } = request.params as { id: string };
-    const deleteClient = await ClientRepo.Delete(id);
-    reply.status(STANDARD.OK.statusCode).send({ data: deleteClient });
+    const spare_data = request.body as ISpareUpdateDto;
+    const spare = await SpareRepo.Update(id, spare_data);
+    reply.status(STANDARD.OK.statusCode).send({ data: spare });
+    db.end();
+  } catch (e) {
+    handleServerError(reply, e);
+  }
+};
+
+export const DeleteSpare = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const db = await connectPostgres();
+  try {
+    const { id } = request.params as { id: string };
+    const deleteSpare = await SpareRepo.Delete(id);
+    reply.status(STANDARD.OK.statusCode).send({ data: deleteSpare });
     db.end();
   } catch (e) {
     handleServerError(reply, e);

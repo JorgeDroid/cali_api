@@ -5,31 +5,31 @@ import * as controllers from "../controllers";
 import { utils } from "../utils";
 // import { checkValidRequest, checkValidUser } from "../helpers/auth.helper";
 
-async function clientsRouter(fastify: FastifyInstance) {
+async function adminsRouter(fastify: FastifyInstance) {
   fastify.get(
-    "/clients",
+    "/admins",
     {
       config: {
-        description: "Get all clients",
+        description: "Get all admins",
       },
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.GetClients
+    controllers.GetAdmins
   );
 
   fastify.get(
-    "/clients/:id",
+    "/admins/:id",
     {
       config: {
-        description: "Get client by id",
+        description: "Get admin by id",
       },
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.GetClient
+    controllers.GetAdmin
   );
 
   fastify.post(
-    "/clients",
+    "/admins",
     {
       schema: {
         body: {
@@ -45,16 +45,16 @@ async function clientsRouter(fastify: FastifyInstance) {
         },
       },
       config: {
-        description: "Create Client",
+        description: "Create Admin",
       },
       preValidation: utils.preValidation(clientCreationSchema),
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.CreateClient
+    controllers.CreateAdmin
   );
 
   fastify.put(
-    "/clients/:id",
+    "/admins/:id",
     {
       schema: {
         body: {
@@ -69,24 +69,24 @@ async function clientsRouter(fastify: FastifyInstance) {
         },
       },
       config: {
-        description: "Update Client",
+        description: "Update Admin",
       },
       preValidation: utils.preValidation(clientUpdateSchema),
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.UpdateClient
+    controllers.UpdateAdmin
   );
 
   fastify.delete(
-    "/clients/:id",
+    "/admins/:id",
     {
       config: {
-        description: "Delete Client",
+        description: "Delete Admin",
       },
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.DeleteClient
+    controllers.DeleteAdmin
   );
 }
 
-export default clientsRouter;
+export default adminsRouter;

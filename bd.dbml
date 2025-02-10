@@ -11,10 +11,6 @@ Table users{
 Table clients { 
   id uuid [primary key] 
   user_id uuid [ref: - users.id] 
-  full_name varchar 
-  name varchar 
-  last_name varchar 
-  phone varchar 
   created_at timestamp 
   updated_at timestamp 
 
@@ -23,9 +19,11 @@ Table clients {
 Table technicians{ 
   id uuid [primary key] 
   user_id uuid [ref: - users.id] 
-  full_name varchar 
-  first_name varchar 
-  last_name varchar 
+}
+
+Table admins{ 
+  id uuid [primary key] 
+  user_id uuid [ref: - users.id] 
 } 
 
 Table roles{ 
@@ -43,6 +41,7 @@ Table vehicles {
   id uuid [primary key] 
   client_id uuid [ref: > clients.id] 
   model_id uuid [ref: > models.id] 
+  year varchar 
   plate varchar 
   color varchar 
   name varchar 
@@ -67,6 +66,14 @@ Table models {
 Table brands { 
   id uuid [primary key] 
   name varchar 
+} 
+
+enum service_status { 
+  created  
+  waiting_approval 
+  approved 
+  in_progress 
+  completed 
 } 
 
 Table services { 
@@ -106,13 +113,13 @@ Table labours_x_service {
 } 
 
 
-Table service_details_x_notes{ 
+Table notes_x_service_detail{ 
   id uuid [primary key] 
   service_details_id uuid [ref: <> service_details.id] 
   service_notes_id uuid [ref: <> service_notes.id] 
 } 
 
-Table service_details_x_media{ 
+Table media_x_service_detail{ 
   id uuid [primary key] 
   service_details_id uuid [ref: <> service_details.id] 
   media_id uuid [ref: <> media.id] 
@@ -133,13 +140,7 @@ Table media {
   updated_at timestamp 
 } 
 
-enum service_status { 
-  created  
-  waiting_approval 
-  approved 
-  in_progress 
-  completed 
-} 
+
 
 enum role_names{ 
   system_administrator 

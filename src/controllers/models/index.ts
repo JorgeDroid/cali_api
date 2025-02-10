@@ -2,75 +2,75 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { STANDARD } from "../../constants/request";
 import { handleServerError } from "../../helpers/errors.helper";
 import { connectPostgres } from "../..";
-import { IClientCreationDto, IClientUpdateDto } from "../../schemas/Client";
-import { ClientRepo } from "../../repo/clients";
+import { IModelCreationDto, IModelUpdateDto } from "../../schemas/Models";
+import { ModelRepo } from "../../repo";
 
-export const CreateClient = async (
+export const CreateModel = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
-    const user_data = request.body as IClientCreationDto;
-    const newClient = await ClientRepo.Create(user_data);
-    reply.status(STANDARD.OK.statusCode).send({ data: newClient });
+    const model_data = request.body as IModelCreationDto;
+    const newModel = await ModelRepo.Create(model_data);
+    reply.status(STANDARD.OK.statusCode).send({ data: newModel });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const GetClients = async (_: FastifyRequest, reply: FastifyReply) => {
+export const GetModels = async (_: FastifyRequest, reply: FastifyReply) => {
   const db = await connectPostgres();
   try {
-    const clients = await ClientRepo.GetAll();
-    reply.status(STANDARD.OK.statusCode).send({ data: clients });
+    const models = await ModelRepo.GetAll();
+    reply.status(STANDARD.OK.statusCode).send({ data: models });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const GetClient = async (
-  request: FastifyRequest,
-  reply: FastifyReply
-) => {
-  const db = await connectPostgres();
-  try {
-    const { id } = request.params as { id: string };
-    const client = await ClientRepo.GetByID(id);
-    reply.status(STANDARD.OK.statusCode).send({ data: client });
-    db.end();
-  } catch (e) {
-    handleServerError(reply, e);
-  }
-};
-
-export const UpdateClient = async (
+export const GetModel = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
     const { id } = request.params as { id: string };
-    const user_data = request.body as IClientUpdateDto;
-    const client = await ClientRepo.Update(id, user_data);
-    reply.status(STANDARD.OK.statusCode).send({ data: client });
+    const model = await ModelRepo.GetByID(id);
+    reply.status(STANDARD.OK.statusCode).send({ data: model });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const DeleteClient = async (
+export const UpdateModel = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
     const { id } = request.params as { id: string };
-    const deleteClient = await ClientRepo.Delete(id);
-    reply.status(STANDARD.OK.statusCode).send({ data: deleteClient });
+    const model_data = request.body as IModelUpdateDto;
+    const model = await ModelRepo.Update(id, model_data);
+    reply.status(STANDARD.OK.statusCode).send({ data: model });
+    db.end();
+  } catch (e) {
+    handleServerError(reply, e);
+  }
+};
+
+export const DeleteModel = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const db = await connectPostgres();
+  try {
+    const { id } = request.params as { id: string };
+    const deleteModel = await ModelRepo.Delete(id);
+    reply.status(STANDARD.OK.statusCode).send({ data: deleteModel });
     db.end();
   } catch (e) {
     handleServerError(reply, e);

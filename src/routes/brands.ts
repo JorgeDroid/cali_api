@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { clientCreationSchema, clientUpdateSchema } from "../schemas/Client";
+import { clientUpdateSchema, brandCreationSchema } from "../schemas/Client";
 import * as controllers from "../controllers";
 
 import { utils } from "../utils";
@@ -7,85 +7,77 @@ import { utils } from "../utils";
 
 async function clientsRouter(fastify: FastifyInstance) {
   fastify.get(
-    "/clients",
+    "/brands",
     {
       config: {
-        description: "Get all clients",
+        description: "Get all brands",
       },
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.GetClients
+    controllers.GetBrands
   );
 
   fastify.get(
-    "/clients/:id",
+    "/brands/:id",
     {
       config: {
-        description: "Get client by id",
+        description: "Get brand by id",
       },
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.GetClient
+    controllers.GetBrand
   );
 
   fastify.post(
-    "/clients",
+    "/brands",
     {
       schema: {
         body: {
           type: "object",
-          required: ["name", "last_name", "email", "phone", "password"],
+          required: ["name"],
           properties: {
             name: { type: "string" },
-            last_name: { type: "string" },
-            email: { type: "string", format: "email" },
-            phone: { type: "string" },
-            password: { type: "string", minLength: 8 },
           },
         },
       },
       config: {
-        description: "Create Client",
+        description: "Create Brand",
       },
-      preValidation: utils.preValidation(clientCreationSchema),
+      preValidation: utils.preValidation(brandCreationSchema),
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.CreateClient
+    controllers.CreateBrand
   );
 
   fastify.put(
-    "/clients/:id",
+    "/brands/:id",
     {
       schema: {
         body: {
           type: "object",
           properties: {
             name: { type: "string" },
-            last_name: { type: "string" },
-            email: { type: "string", format: "email" },
-            phone: { type: "string" },
-            password: { type: "string", minLength: 8 },
           },
         },
       },
       config: {
-        description: "Update Client",
+        description: "Update Brand",
       },
       preValidation: utils.preValidation(clientUpdateSchema),
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.UpdateClient
+    controllers.UpdateBrand
   );
 
   fastify.delete(
-    "/clients/:id",
+    "/brands/:id",
     {
       config: {
         description: "Delete Client",
       },
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.DeleteClient
+    controllers.DeleteBrand
   );
 }
 

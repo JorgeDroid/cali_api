@@ -2,75 +2,75 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { STANDARD } from "../../constants/request";
 import { handleServerError } from "../../helpers/errors.helper";
 import { connectPostgres } from "../..";
-import { IClientCreationDto, IClientUpdateDto } from "../../schemas/Client";
-import { ClientRepo } from "../../repo/clients";
+import { IBrandCreationDto, IBrandUpdateDto } from "../../schemas/Brands";
+import { BrandRepo } from "../../repo";
 
-export const CreateClient = async (
+export const CreateBrand = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
-    const user_data = request.body as IClientCreationDto;
-    const newClient = await ClientRepo.Create(user_data);
-    reply.status(STANDARD.OK.statusCode).send({ data: newClient });
+    const brand_data = request.body as IBrandCreationDto;
+    const newBrand = await BrandRepo.Create(brand_data);
+    reply.status(STANDARD.OK.statusCode).send({ data: newBrand });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const GetClients = async (_: FastifyRequest, reply: FastifyReply) => {
+export const GetBrands = async (_: FastifyRequest, reply: FastifyReply) => {
   const db = await connectPostgres();
   try {
-    const clients = await ClientRepo.GetAll();
-    reply.status(STANDARD.OK.statusCode).send({ data: clients });
+    const brands = await BrandRepo.GetAll();
+    reply.status(STANDARD.OK.statusCode).send({ data: brands });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const GetClient = async (
-  request: FastifyRequest,
-  reply: FastifyReply
-) => {
-  const db = await connectPostgres();
-  try {
-    const { id } = request.params as { id: string };
-    const client = await ClientRepo.GetByID(id);
-    reply.status(STANDARD.OK.statusCode).send({ data: client });
-    db.end();
-  } catch (e) {
-    handleServerError(reply, e);
-  }
-};
-
-export const UpdateClient = async (
+export const GetBrand = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
     const { id } = request.params as { id: string };
-    const user_data = request.body as IClientUpdateDto;
-    const client = await ClientRepo.Update(id, user_data);
-    reply.status(STANDARD.OK.statusCode).send({ data: client });
+    const brand = await BrandRepo.GetByID(id);
+    reply.status(STANDARD.OK.statusCode).send({ data: brand });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const DeleteClient = async (
+export const UpdateBrand = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
     const { id } = request.params as { id: string };
-    const deleteClient = await ClientRepo.Delete(id);
-    reply.status(STANDARD.OK.statusCode).send({ data: deleteClient });
+    const brand_data = request.body as IBrandUpdateDto;
+    const brand = await BrandRepo.Update(id, brand_data);
+    reply.status(STANDARD.OK.statusCode).send({ data: brand });
+    db.end();
+  } catch (e) {
+    handleServerError(reply, e);
+  }
+};
+
+export const DeleteBrand = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const db = await connectPostgres();
+  try {
+    const { id } = request.params as { id: string };
+    const deleteBrand = await BrandRepo.Delete(id);
+    reply.status(STANDARD.OK.statusCode).send({ data: deleteBrand });
     db.end();
   } catch (e) {
     handleServerError(reply, e);

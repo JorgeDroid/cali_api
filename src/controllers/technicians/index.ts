@@ -3,50 +3,59 @@ import { STANDARD } from "../../constants/request";
 import { handleServerError } from "../../helpers/errors.helper";
 import { connectPostgres } from "../..";
 import { IClientCreationDto, IClientUpdateDto } from "../../schemas/Client";
-import { ClientRepo } from "../../repo/clients";
+import {
+  Create,
+  Delete,
+  GetAll,
+  GetByID,
+  Update,
+} from "../../repo/technicians";
 
-export const CreateClient = async (
+export const CreateTechnician = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
     const user_data = request.body as IClientCreationDto;
-    const newClient = await ClientRepo.Create(user_data);
-    reply.status(STANDARD.OK.statusCode).send({ data: newClient });
+    const newTechnician = await Create(user_data);
+    reply.status(STANDARD.OK.statusCode).send({ data: newTechnician });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const GetClients = async (_: FastifyRequest, reply: FastifyReply) => {
+export const GetTechnicians = async (
+  _: FastifyRequest,
+  reply: FastifyReply
+) => {
   const db = await connectPostgres();
   try {
-    const clients = await ClientRepo.GetAll();
-    reply.status(STANDARD.OK.statusCode).send({ data: clients });
+    const technicians = await GetAll();
+    reply.status(STANDARD.OK.statusCode).send({ data: technicians });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const GetClient = async (
+export const GetTechnician = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
     const { id } = request.params as { id: string };
-    const client = await ClientRepo.GetByID(id);
-    reply.status(STANDARD.OK.statusCode).send({ data: client });
+    const technician = await GetByID(id);
+    reply.status(STANDARD.OK.statusCode).send({ data: technician });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const UpdateClient = async (
+export const UpdateTechnician = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
@@ -54,23 +63,23 @@ export const UpdateClient = async (
   try {
     const { id } = request.params as { id: string };
     const user_data = request.body as IClientUpdateDto;
-    const client = await ClientRepo.Update(id, user_data);
-    reply.status(STANDARD.OK.statusCode).send({ data: client });
+    const technician = await Update(id, user_data);
+    reply.status(STANDARD.OK.statusCode).send({ data: technician });
     db.end();
   } catch (e) {
     handleServerError(reply, e);
   }
 };
 
-export const DeleteClient = async (
+export const DeleteTechnician = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const db = await connectPostgres();
   try {
     const { id } = request.params as { id: string };
-    const deleteClient = await ClientRepo.Delete(id);
-    reply.status(STANDARD.OK.statusCode).send({ data: deleteClient });
+    const deleteTechnician = await Delete(id);
+    reply.status(STANDARD.OK.statusCode).send({ data: deleteTechnician });
     db.end();
   } catch (e) {
     handleServerError(reply, e);

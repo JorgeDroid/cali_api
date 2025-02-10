@@ -5,31 +5,31 @@ import * as controllers from "../controllers";
 import { utils } from "../utils";
 // import { checkValidRequest, checkValidUser } from "../helpers/auth.helper";
 
-async function clientsRouter(fastify: FastifyInstance) {
+async function techniciansRouter(fastify: FastifyInstance) {
   fastify.get(
-    "/clients",
+    "/technicians",
     {
       config: {
-        description: "Get all clients",
+        description: "Get all technicians",
       },
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.GetClients
+    controllers.GetTechnicians
   );
 
   fastify.get(
-    "/clients/:id",
+    "/technicians/:id",
     {
       config: {
-        description: "Get client by id",
+        description: "Get technician by id",
       },
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.GetClient
+    controllers.GetTechnician
   );
 
   fastify.post(
-    "/clients",
+    "/technicians",
     {
       schema: {
         body: {
@@ -45,16 +45,16 @@ async function clientsRouter(fastify: FastifyInstance) {
         },
       },
       config: {
-        description: "Create Client",
+        description: "Create Technician",
       },
       preValidation: utils.preValidation(clientCreationSchema),
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.CreateClient
+    controllers.CreateTechnician
   );
 
   fastify.put(
-    "/clients/:id",
+    "/technicians/:id",
     {
       schema: {
         body: {
@@ -69,24 +69,24 @@ async function clientsRouter(fastify: FastifyInstance) {
         },
       },
       config: {
-        description: "Update Client",
+        description: "Update Technician",
       },
       preValidation: utils.preValidation(clientUpdateSchema),
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.UpdateClient
+    controllers.UpdateTechnician
   );
 
   fastify.delete(
-    "/clients/:id",
+    "/technicians/:id",
     {
       config: {
-        description: "Delete Client",
+        description: "Delete Technician",
       },
       // preHandler: [checkValidRequest, checkValidUser],
     },
-    controllers.DeleteClient
+    controllers.DeleteTechnician
   );
 }
 
-export default clientsRouter;
+export default techniciansRouter;
