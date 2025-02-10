@@ -47,7 +47,7 @@ async function bootstrap() {
   app.register(require("./routes/technicians"), { prefix: "api" });
   app.register(require("./routes/brands"), { prefix: "api" });
   app.register(require("./routes/models"), { prefix: "api" });
-  app.register(require("./routes/spares"), { prefix: "api" }
+  app.register(require("./routes/spares"), { prefix: "api" });
   // Start the server
   const port = parseInt(process.env.PORT ?? "", 10) || 3000;
   console.log("Starting server on port", port);
